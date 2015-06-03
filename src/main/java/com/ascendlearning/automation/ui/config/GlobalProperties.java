@@ -10,4 +10,6 @@ public final class GlobalProperties {
 	
 	//Default wait - 10s
 	public static final int EXPLICIT_WAIT=PropertiesRepository.getInt("global.driver.wait");
+	
+	
 }
