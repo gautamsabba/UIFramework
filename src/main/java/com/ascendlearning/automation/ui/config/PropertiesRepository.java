@@ -8,6 +8,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
+import com.ascendlearning.automation.ui.exceptions.DriverException;
 import com.ascendlearning.automation.ui.exceptions.ExceptionConstants;
 import com.ascendlearning.automation.ui.logging.LogHandler;
 
@@ -17,31 +18,33 @@ public final class PropertiesRepository {
 	private static Logger log = LogHandler.getLogger(PropertiesRepository.class);
 	
 	/**
-	 * Loading all the properties files in the classpath
+	 * Loading default properties
 	 */
 	static {		
 		try {
-			String path = PropertiesRepository.class.getResource("").getPath();
-			File[] propertiesFiles = new File(path).listFiles(new FilenameFilter() {
-			    public boolean accept(File dir, String name) {
-			        return name.endsWith(".properties");
-			    }
-			});
-			for (File propFile:propertiesFiles) {
-				PropertiesConfiguration properties = new PropertiesConfiguration(propFile);
-				propAggregator.addConfiguration(properties);
-			}
+			propAggregator.addConfiguration(new PropertiesConfiguration(GlobalProperties.GLOBAL_PROPS));
+			propAggregator.addConfiguration(new PropertiesConfiguration(GlobalProperties.LOG_PROPS));
 		} catch (ConfigurationException e) {
-			log.error(ExceptionConstants.PROPERTIES_EXCEPTION, e);
-		}	
+			LogHandler.getLogger(PropertiesRepository.class).error("Unable to load default properties", e);
+		}				
 	}
 	
 	/**
 	 * Add additional properties
 	 * @param properties
 	 */
-	public static void appendProperties(CombinedConfiguration properties) {
-		propAggregator.addConfiguration(properties);
+	public static void appendProperties(String propertiesFile) throws DriverException{
+		
+		PropertiesConfiguration properties;
+		try {
+			properties = new PropertiesConfiguration(propertiesFile);
+		} catch (ConfigurationException ce) {
+			throw new DriverException("Unable to load properties", ce);
+		}
+		
+		if (properties != null) {
+			propAggregator.addConfiguration(properties);
+		}
 	}
 	
 	public static String getString(String key) {

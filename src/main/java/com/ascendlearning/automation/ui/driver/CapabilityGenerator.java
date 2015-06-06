@@ -6,14 +6,14 @@ import com.ascendlearning.automation.ui.config.GlobalProperties;
 import com.ascendlearning.automation.ui.config.PropertiesRepository;
 
 public final class CapabilityGenerator {
-	public static DesiredCapabilities getCapabilities() {
+	public static DesiredCapabilities getCapabilities(String browserType) {
 		DesiredCapabilities cap = null;
-		String browserType = PropertiesRepository.getString("global.browser.name");
+		System.out.println("BROWSER : " + browserType);
 		
 		switch (browserType){			
 			case GlobalProperties.FIREFOX:
 				cap = DesiredCapabilities.firefox();
-				cap.setCapability("browserName", PropertiesRepository.getString("global.browser.capability.firefox.browserName"));
+				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.firefox.browserName"));
 				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.firefox.platform"));
 				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.firefox.takesScreenshot"));
 				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.firefox.handlesAlerts"));
@@ -22,7 +22,7 @@ public final class CapabilityGenerator {
 				
 			default:
 				cap = DesiredCapabilities.firefox();
-				cap.setCapability("browserName", PropertiesRepository.getString("global.browser.capability.firefox.browserName"));
+				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.firefox.browserName"));
 				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.firefox.platform"));
 				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.firefox.takesScreenshot"));
 				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.firefox.handlesAlerts"));
@@ -31,5 +31,4 @@ public final class CapabilityGenerator {
 		
 		return cap;
 	}
-
 }

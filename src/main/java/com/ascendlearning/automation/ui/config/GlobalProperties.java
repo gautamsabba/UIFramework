@@ -11,5 +11,7 @@ public final class GlobalProperties {
 	//Default wait - 10s
 	public static final int EXPLICIT_WAIT=PropertiesRepository.getInt("global.driver.wait");
 	
-	
+	//Default Properties Files
+	public static final String GLOBAL_PROPS = "global.properties";
+	public static final String LOG_PROPS = "log4j.properties";		
 }

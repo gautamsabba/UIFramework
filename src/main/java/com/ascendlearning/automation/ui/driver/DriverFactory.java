@@ -5,38 +5,59 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.ascendlearning.automation.ui.config.GlobalProperties;
 import com.ascendlearning.automation.ui.config.PropertiesRepository;
 import com.ascendlearning.automation.ui.exceptions.ExceptionConstants;
 import com.ascendlearning.automation.ui.logging.LogHandler;
 
 public class DriverFactory {
 	
-	private Logger log = LogHandler.getLogger(DriverFactory.class);
+	private Logger logger = LogHandler.getLogger(DriverFactory.class);
 
 	private DriverFactory() {
-      //Do-nothing..Do not allow to initialize this class from outside
 	}
+	
 	private static DriverFactory instance = new DriverFactory();
  
-	public static DriverFactory getInstance()
-	{
+	public static DriverFactory getInstance() {
 		return instance;
 	}
  
 	ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>() {// thread local driver object for webdriver
 		@Override
 		protected WebDriver initialValue() {
+			
+			String browserType = PropertiesRepository.getString("global.browser.name");
+			DesiredCapabilities dc = CapabilityGenerator.getCapabilities(browserType);
+			logger.info("Desired Capabilities : " + dc);
+			
 			if(PropertiesRepository.getBoolean("global.grid.mode")) {
 				try {
-					return new RemoteWebDriver(new URL(PropertiesRepository.getString("global.grid.hub")), CapabilityGenerator.getCapabilities());
+					URL hubURL = new URL(PropertiesRepository.getString("global.grid.hub"));					
+					logger.info("Hub URL : " + hubURL);
+					
+					return new RemoteWebDriver(hubURL, dc);
 				} catch (MalformedURLException e) {
-					log.error(ExceptionConstants.PROPERTIES_EXCEPTION, e);
+					logger.error(ExceptionConstants.PROPERTIES_EXCEPTION, e);
 					return null;
 				}
 			} else {
-				return new RemoteWebDriver(CapabilityGenerator.getCapabilities());
+				switch (browserType){			
+					case GlobalProperties.FIREFOX:
+						return new FirefoxDriver(dc);
+					case GlobalProperties.IE:
+						return new InternetExplorerDriver(dc);
+					case GlobalProperties.CHROME:
+						return new ChromeDriver(dc);
+					default:
+						return new FirefoxDriver(dc);
+				}
 			}
 		}
 	};

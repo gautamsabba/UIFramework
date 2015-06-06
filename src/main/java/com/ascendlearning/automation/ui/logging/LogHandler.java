@@ -8,7 +8,5 @@ public class LogHandler {
 	@SuppressWarnings("rawtypes")
 	public static Logger getLogger(Class clazz) {
 		return LogManager.getLogger(clazz);
-	}
-	
-	
+	}	
 }
