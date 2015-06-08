@@ -1,21 +1,17 @@
 package com.ascendlearning.automation.ui.config;
 
-import java.io.File;
-import java.io.FilenameFilter;
-
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
+
+import java.io.File;
 
 import com.ascendlearning.automation.ui.exceptions.DriverException;
-import com.ascendlearning.automation.ui.exceptions.ExceptionConstants;
 import com.ascendlearning.automation.ui.logging.LogHandler;
 
 public final class PropertiesRepository {
 	
 	private static CombinedConfiguration propAggregator = new CombinedConfiguration();
-	private static Logger log = LogHandler.getLogger(PropertiesRepository.class);
 	
 	/**
 	 * Loading default properties
@@ -33,7 +29,7 @@ public final class PropertiesRepository {
 	 * Add additional properties
 	 * @param properties
 	 */
-	public static void appendProperties(String propertiesFile) throws DriverException{
+	public static void appendProperties(String propertiesFile) throws DriverException {
 		
 		PropertiesConfiguration properties;
 		try {
@@ -44,6 +40,19 @@ public final class PropertiesRepository {
 		
 		if (properties != null) {
 			propAggregator.addConfiguration(properties);
+		}
+	}
+	
+	public static void appendAllProperties(String relativePath) throws DriverException {
+		File resourcesFolder = new File(relativePath);
+		File[] listOfFiles = resourcesFolder.listFiles();
+		if (listOfFiles != null && listOfFiles.length > 0) {
+			for (File file: listOfFiles) {
+				String fileName = file.getName();
+				if(fileName.endsWith(".properties")) {
+					appendProperties(fileName);
+				}
+			}
 		}
 	}
 	

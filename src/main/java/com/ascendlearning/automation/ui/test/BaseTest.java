@@ -25,6 +25,7 @@ public class BaseTest {
 	@BeforeMethod
 	public void setup() {
 		driver = DriverFactory.getInstance().getDriver();
+		manageDriver();
 	}
 			
 	@AfterMethod
@@ -46,5 +47,10 @@ public class BaseTest {
 			logger.error("Unable to load properties file : " + propFile, e);
 		}
 	}
-
+	
+	protected void manageDriver() {
+		if(driver != null) {
+			driver.manage().window().maximize();
+		}
+	}
 }

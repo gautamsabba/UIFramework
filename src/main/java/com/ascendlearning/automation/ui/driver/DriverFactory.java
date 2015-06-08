@@ -29,7 +29,7 @@ public class DriverFactory {
 		return instance;
 	}
  
-	ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>() {// thread local driver object for webdriver
+	ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>() {// thread local threadDriver object for webdriver
 		@Override
 		protected WebDriver initialValue() {
 			
@@ -62,12 +62,12 @@ public class DriverFactory {
 		}
 	};
  
-	public WebDriver getDriver() {// call this method to get the driver object and launch the browser
-		return driver.get();
+	public WebDriver getDriver() {// call this method to get the threadDriver object and launch the browser
+		return threadDriver.get();
 	}
  
-	public void removeDriver() {// Quits the driver and closes the browser
-		driver.get().quit();
-		driver.remove();
+	public void removeDriver() {// Quits the threadDriver and closes the browser
+		threadDriver.get().quit();
+		threadDriver.remove();
 	}
 }
