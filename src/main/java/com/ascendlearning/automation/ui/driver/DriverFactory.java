@@ -34,14 +34,15 @@ public class DriverFactory {
 		protected WebDriver initialValue() {
 			
 			String browserType = PropertiesRepository.getString("global.browser.name");
+			System.out.println("BROWSER : " + browserType);
+			logger.info("Browser Type : " + browserType);
 			DesiredCapabilities dc = CapabilityGenerator.getCapabilities(browserType);
 			logger.info("Desired Capabilities : " + dc);
 			
 			if(PropertiesRepository.getBoolean("global.grid.mode")) {
 				try {
 					URL hubURL = new URL(PropertiesRepository.getString("global.grid.hub"));					
-					logger.info("Hub URL : " + hubURL);
-					
+					logger.info("Hub URL : " + hubURL);					
 					return new RemoteWebDriver(hubURL, dc);
 				} catch (MalformedURLException e) {
 					logger.error(ExceptionConstants.PROPERTIES_EXCEPTION, e);
