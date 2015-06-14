@@ -17,7 +17,9 @@ public class TextHandler {
 	
 	public void writeText(WebElement textElement, String text) {
 		if (textElement != null) {
+			textElement.click();
 			textElement.clear();
+			textElement.click();
 			textElement.sendKeys(text);
 		}
 	}
@@ -25,7 +27,9 @@ public class TextHandler {
 	public void writeText(String selector, String text) {
 		WebElement textElement = driver.findElement(By.cssSelector(selector));
 		if (textElement != null) {
+			textElement.click();
 			textElement.clear();
+			textElement.click();
 			textElement.sendKeys(text);
 		}
 	}
