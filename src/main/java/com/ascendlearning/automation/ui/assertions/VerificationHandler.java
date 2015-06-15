@@ -13,6 +13,7 @@ public class VerificationHandler {
 			Assert.assertTrue(flag);
 		} catch (AssertionError e) {
 			logger.error("False returned", e);
+			Assert.fail("False returned", e);
 		}
 	}
 	
@@ -21,6 +22,7 @@ public class VerificationHandler {
 			Assert.assertFalse(flag);
 		} catch (AssertionError e) {
 			logger.error("True returned", e);
+			Assert.fail("True returned", e);
 		}
 	}
 	
@@ -29,6 +31,7 @@ public class VerificationHandler {
 			Assert.assertEquals(actual,control);
 		} catch (AssertionError e) {
 			logger.error("Value mismatch", e);
+			Assert.fail("Value mismatch", e);
 		}
 	}
 	
@@ -37,6 +40,7 @@ public class VerificationHandler {
 			Assert.assertNotEquals(actual,control);
 		} catch (AssertionError e) {
 			logger.error("Values match", e);
+			Assert.fail("Values match", e);
 		}
 	}
 }

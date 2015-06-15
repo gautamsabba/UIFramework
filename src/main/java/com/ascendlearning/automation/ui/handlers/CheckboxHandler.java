@@ -15,6 +15,11 @@ public class CheckboxHandler {
 		return checkbox;
 	}
 	
+	public boolean isCheckboxSelected(String selector) {
+		WebElement checkbox = driver.findElement(By.cssSelector(selector));
+		return checkbox.isSelected();
+	}
+	
 	public void selectCheckbox(WebElement checkbox) {
 		if (checkbox != null) {
 			checkbox.click();
