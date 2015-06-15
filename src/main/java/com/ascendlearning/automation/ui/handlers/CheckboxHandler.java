@@ -26,7 +26,7 @@ public class CheckboxHandler {
 		}
 	}
 	
-	public void clickButton(String selector) {
+	public void selectCheckbox(String selector) {
 		WebElement checkbox = driver.findElement(By.cssSelector(selector));
 		if (checkbox != null) {
 			checkbox.click();
