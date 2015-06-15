@@ -6,26 +6,27 @@ import org.openqa.selenium.WebDriver;
 
 import com.ascendlearning.automation.ui.logging.LogHandler;
 
-public class PopupHandler {
-	
-	protected WebDriver driver = null;
-	private Logger logger = LogHandler.getLogger(this.getClass());
+public class PopupHandler extends BaseHandler {
 	  
-	public PopupHandler(WebDriver webDriver) {
-		driver = webDriver;
+	public PopupHandler(WebDriver driver) {
+		super(driver);
 	}
-    public void acceptAlert() {
+    public void acceptAlert(String...waitFor) {
     	driver.switchTo().defaultContent();
     	Alert alert = driver.switchTo().alert();
     	alert.accept();
-    	logger.info("Accepting alert : " + alert.getText());
+    	if (waitFor != null && waitFor.length>0) {
+			setDriverWait(waitFor[0]);
+		}
     }
     
-    public void dismissAlert() {
+    public void dismissAlert(String...waitFor) {
     	driver.switchTo().defaultContent();
     	Alert alert = driver.switchTo().alert();
     	alert.dismiss();
-    	logger.info("Dismissing alert : " + alert.getText());
+    	if (waitFor != null && waitFor.length>0) {
+			setDriverWait(waitFor[0]);
+		}
     }
     
     public String getAlertText() {

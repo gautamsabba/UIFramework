@@ -6,11 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
-public class MenuHandler {
-	
-	WebDriver driver = null;
+import com.ascendlearning.automation.ui.exceptions.DriverException;
+
+public class MenuHandler extends BaseHandler {
+
 	public MenuHandler(WebDriver driver) {
-		this.driver = driver;
+		super(driver);
 	}
 	
 	public WebElement getMenuItem(String cssSelector) {
@@ -18,26 +19,28 @@ public class MenuHandler {
 		return we;
 	}
 	
-	public void selectMenuItem(String selector) {
+	public void selectMenuItem(String selector, String...waitFor) throws DriverException {
 		WebElement we = driver.findElement(By.cssSelector(selector));
-		we.click();
-	}
-	
-	public void hoverOverMenuItem(String selector) {
-		WebElement we = driver.findElement(By.cssSelector(selector));
-		Actions actions = new Actions(driver);
-		actions.moveToElement(we).build().perform();
-	}
-	
-	public void selectByIndex(Select dropDown, int index) {
-		if (dropDown != null) {
-			dropDown.selectByIndex(index);
+		if(we != null) {
+			we.click();
+			if (waitFor != null && waitFor.length>0) {
+				setDriverWait(waitFor[0]);
+			}
+		} else {
+			throw new DriverException("Unable to locate menu element");
 		}
 	}
 	
-	public void selectByValue(Select dropDown, String value) {
-		if (dropDown != null) {
-			dropDown.selectByValue(value);
+	public void hoverOverMenuItem(String selector, String... waitFor) throws DriverException {
+		WebElement we = driver.findElement(By.cssSelector(selector));
+		Actions actions = new Actions(driver);
+		if(we != null) {
+			actions.moveToElement(we).build().perform();
+			if (waitFor != null && waitFor.length>0) {
+				setDriverWait(waitFor[0]);
+			}
+		} else {
+			throw new DriverException("Unable to locate menu element");
 		}
 	}
 }
