@@ -9,10 +9,14 @@ public final class GlobalProperties {
 	public static final String SAFARI = "safari";
 	
 	//Default wait - 10s
-	public static final int EXPLICIT_WAIT=PropertiesRepository.getInt("global.driver.wait");
+	public static final int EXPLICIT_WAIT = PropertiesRepository.getInt("global.driver.wait");
 	
 	//Default Properties Files
 	public static final String PROPS_LIST = "prop-files.properties";
 	public static final String GLOBAL_PROPS = "global.properties";
-	public static final String LOG_PROPS = "log4j.properties";		
+	public static final String LOG_PROPS = "log4j.properties";
+
+	// Selector Types
+	public static final String CSS_SELECTOR = "CSS";
+	public static final String SIZZLE_SELECTOR = "SIZZLE";
 }

@@ -1,10 +1,8 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 
 import com.ascendlearning.automation.ui.exceptions.DriverException;
 
@@ -14,16 +12,15 @@ public class MenuHandler extends BaseHandler {
 		super(driver);
 	}
 	
-	public WebElement getMenuItem(String cssSelector) {
-		WebElement we = driver.findElement(By.cssSelector(cssSelector));
-		return we;
+	public WebElement getMenuItem(String cssSelector) throws DriverException {
+		return findElement(cssSelector);
 	}
 	
-	public void selectMenuItem(String selector, String...waitFor) throws DriverException {
-		WebElement we = driver.findElement(By.cssSelector(selector));
-		if(we != null) {
+	public void selectMenuItem(String cssSelector, String... waitFor) throws DriverException {
+		WebElement we = findElement(cssSelector);
+		if (we != null) {
 			we.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -31,12 +28,12 @@ public class MenuHandler extends BaseHandler {
 		}
 	}
 	
-	public void hoverOverMenuItem(String selector, String... waitFor) throws DriverException {
-		WebElement we = driver.findElement(By.cssSelector(selector));
+	public void hoverOverMenuItem(String cssSelector, String... waitFor) throws DriverException {
+		WebElement we = findElement(cssSelector);
 		Actions actions = new Actions(driver);
-		if(we != null) {
+		if (we != null) {
 			actions.moveToElement(we).build().perform();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {

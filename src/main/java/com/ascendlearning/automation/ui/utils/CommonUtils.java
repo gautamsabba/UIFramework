@@ -1,6 +1,5 @@
 package com.ascendlearning.automation.ui.utils;
 
-import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class CommonUtils {
 		Map<String, String> map = new HashMap<String, String>();
 		int i = 0;
 		for (String temp : replaceList) {
-			map.put("{"+i+"}", temp);
+			map.put("{" + i + "}", temp);
 			i++;
 		}
 		return map;

@@ -1,21 +1,18 @@
 package com.ascendlearning.automation.ui.config;
 
-import org.apache.commons.configuration.CombinedConfiguration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.tree.OverrideCombiner;
-import org.apache.log4j.LogManager;
-
-import java.beans.PropertyVetoException;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.configuration.CombinedConfiguration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.tree.OverrideCombiner;
+import org.apache.log4j.LogManager;
+
 import com.ascendlearning.automation.ui.exceptions.DriverException;
-import com.ascendlearning.automation.ui.logging.LogHandler;
 
 public final class PropertiesRepository {
 	
@@ -24,7 +21,9 @@ public final class PropertiesRepository {
 	
 	/**
 	 * Add additional properties
-	 * @param properties
+	 * 
+	 * @param propertiesFile
+	 * @throws DriverException
 	 */
 	public static void appendProperties(String propertiesFile) throws DriverException {
 		

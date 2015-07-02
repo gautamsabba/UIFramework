@@ -1,8 +1,5 @@
 package com.ascendlearning.automation.ui.test;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +11,6 @@ import com.ascendlearning.automation.ui.driver.DriverFactory;
 import com.ascendlearning.automation.ui.exceptions.DriverException;
 
 public class BaseTest {
-	
 	protected WebDriver driver = null;	
 	private Logger logger = LogManager.getLogger(this.getClass());
 	
@@ -62,7 +58,7 @@ public class BaseTest {
 	}
 	
 	protected void manageDriver() {
-		if(driver != null) {
+		if (driver != null) {
 			driver.manage().window().maximize();
 		}
 	}

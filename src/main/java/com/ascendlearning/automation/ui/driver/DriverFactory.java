@@ -16,7 +16,7 @@ import com.ascendlearning.automation.ui.config.PropertiesRepository;
 import com.ascendlearning.automation.ui.exceptions.ExceptionConstants;
 import com.ascendlearning.automation.ui.logging.LogHandler;
 
-public class DriverFactory {
+public final class DriverFactory {
 	
 	private Logger logger = LogHandler.getLogger(DriverFactory.class);
 
@@ -29,7 +29,9 @@ public class DriverFactory {
 		return instance;
 	}
  
-	ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>() {// thread local threadDriver object for webdriver
+	ThreadLocal<WebDriver> threadDriver = new ThreadLocal<WebDriver>() { // thread local
+																		 // threadDriver object for
+																		 // webdriver
 		@Override
 		protected WebDriver initialValue() {
 			
@@ -39,7 +41,7 @@ public class DriverFactory {
 			DesiredCapabilities dc = CapabilityGenerator.getCapabilities(browserType);
 			logger.info("Desired Capabilities : " + dc);
 			
-			if(PropertiesRepository.getBoolean("global.grid.mode")) {
+			if (PropertiesRepository.getBoolean("global.grid.mode")) {
 				try {
 					URL hubURL = new URL(PropertiesRepository.getString("global.grid.hub"));					
 					logger.info("Hub URL : " + hubURL);					
@@ -49,7 +51,7 @@ public class DriverFactory {
 					return null;
 				}
 			} else {
-				switch (browserType){			
+				switch (browserType) {
 					case GlobalProperties.FIREFOX:
 						return new FirefoxDriver(dc);
 					case GlobalProperties.IE:
@@ -63,12 +65,15 @@ public class DriverFactory {
 		}
 	};
  
-	public WebDriver getDriver() {// call this method to get the threadDriver object and launch the browser
+	public WebDriver getDriver() { // call this method to get the threadDriver object and launch the
+								   // browser
 		return threadDriver.get();
 	}
  
-	public void removeDriver() {// Quits the threadDriver and closes the browser
-		threadDriver.get().quit();
+	public void removeDriver() { // Quits the threadDriver and closes the browser
+		WebDriver driver = threadDriver.get();
+		driver.close();
+		driver.quit();
 		threadDriver.remove();
 	}
 }

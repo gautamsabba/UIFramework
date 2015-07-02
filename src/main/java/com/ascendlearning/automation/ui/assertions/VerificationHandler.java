@@ -28,7 +28,7 @@ public class VerificationHandler {
 	
 	public static void verifyEquals(String actual, String control) {
 		try {
-			Assert.assertEquals(actual,control);
+			Assert.assertEquals(actual, control);
 		} catch (AssertionError e) {
 			logger.error("Value mismatch", e);
 			Assert.fail("Value mismatch", e);
@@ -37,7 +37,7 @@ public class VerificationHandler {
 	
 	public static void verifyNotEquals(String actual, String control) {
 		try {
-			Assert.assertNotEquals(actual,control);
+			Assert.assertNotEquals(actual, control);
 		} catch (AssertionError e) {
 			logger.error("Values match", e);
 			Assert.fail("Values match", e);

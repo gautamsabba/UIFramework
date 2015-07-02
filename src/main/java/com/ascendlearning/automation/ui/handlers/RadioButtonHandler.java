@@ -1,6 +1,5 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -13,14 +12,13 @@ public class RadioButtonHandler extends BaseHandler {
 	}
 	
 	public WebElement getRadioButton(String selector) {
-		WebElement radioButton = driver.findElement(By.cssSelector(selector));
-		return radioButton;
+		return findElement(selector);
 	}
 	
 	public void selectRadioButton(WebElement radioButton, String...waitFor) throws DriverException {
 		if (radioButton != null) {
 			radioButton.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -29,10 +27,10 @@ public class RadioButtonHandler extends BaseHandler {
 	}
 	
 	public void selectRadioButton(String selector, String...waitFor) throws DriverException {
-		WebElement radioButton = driver.findElement(By.cssSelector(selector));
+		WebElement radioButton = findElement(selector);
 		if (radioButton != null) {
 			radioButton.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {

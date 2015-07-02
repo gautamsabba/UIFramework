@@ -1,7 +1,6 @@
 package com.ascendlearning.automation.ui.driver;
 
 import java.io.File;
-import java.net.URL;
 import java.util.StringTokenizer;
 
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,7 +14,7 @@ public final class CapabilityGenerator {
 		DesiredCapabilities cap = null;
 		System.out.println("BROWSER : " + browserType);
 		
-		switch (browserType){			
+		switch (browserType) {
 			case GlobalProperties.FIREFOX:
 				cap = DesiredCapabilities.firefox();
 				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.browserName"));
@@ -35,13 +34,16 @@ public final class CapabilityGenerator {
 				cap.setCapability("cssSelectorsEnabled", PropertiesRepository.getBoolean("global.browser.capability.chrome.cssSelectorsEnabled"));
 				ChromeOptions options = new ChromeOptions();
 				String extensions = PropertiesRepository.getString("global.browser.capability.chrome.extensions");
-				if(extensions != null && !extensions.trim().equals("")) {
+			if (extensions != null && !extensions.trim().equals("")) {
 					StringTokenizer tokens = new StringTokenizer(extensions, ",");
 					String extensionPath = PropertiesRepository.getString("global.browser.capability.chrome.extensionpath");
-					while(tokens.hasMoreElements()) {
-						File extFile = new File(extensionPath+"/"+tokens.nextToken());
-						options.addExtensions(new File(PropertiesRepository.getString("global.browser.capability.chrome.extensionpath")));
-					}					
+					File[] extFiles = new File[tokens.countTokens()];
+					int i = 0;
+				while (tokens.hasMoreElements()) {
+					extFiles[i] = new File(extensionPath + "/" + tokens.nextToken());
+						i++;
+					}
+					options.addExtensions(extFiles);
 				}				
 				cap.setCapability(ChromeOptions.CAPABILITY, options);
 				break;

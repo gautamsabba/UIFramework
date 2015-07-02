@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.ascendlearning.automation.ui.exceptions.DriverException;
+import com.ascendlearning.automation.ui.utils.SizzleSelector;
 
 public class TextHandler extends BaseHandler {
 
@@ -12,7 +13,7 @@ public class TextHandler extends BaseHandler {
 		super(driver);
 	}
 	
-	public WebElement getTextelement(String selector) {
+	public WebElement getTextElement(String selector) {
 		WebElement textElement = driver.findElement(By.cssSelector(selector));
 		return textElement;
 	}
@@ -23,7 +24,7 @@ public class TextHandler extends BaseHandler {
 			textElement.clear();
 			textElement.click();
 			textElement.sendKeys(text);
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -38,7 +39,7 @@ public class TextHandler extends BaseHandler {
 			textElement.clear();
 			textElement.click();
 			textElement.sendKeys(text);
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -46,9 +47,14 @@ public class TextHandler extends BaseHandler {
 		}
 	}
 	
-	public String getText(String selector) {
-		WebElement textElement = driver.findElement(By.cssSelector(selector));
-		return (textElement != null) ? textElement.getText() : null;
+	public String getText(String selector, boolean... useSizzle) {
+		if (useSizzle != null && useSizzle.length > 0 && useSizzle[0]) {
+			SizzleSelector sizzle = new SizzleSelector(driver);
+			WebElement textElement = sizzle.findElementBySizzleCss(selector);
+			return textElement.getText();
+		} else {
+			WebElement textElement = driver.findElement(By.cssSelector(selector));
+			return (textElement != null) ? textElement.getText() : null;
+		}
 	}
-	
 }

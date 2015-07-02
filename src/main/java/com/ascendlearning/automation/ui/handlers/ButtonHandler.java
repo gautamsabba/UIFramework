@@ -1,6 +1,5 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -12,14 +11,13 @@ public class ButtonHandler extends BaseHandler {
 	}
 	
 	public WebElement getButton(String selector) {
-		WebElement button = driver.findElement(By.cssSelector(selector));
-		return button;
+		return findElement(selector);
 	}
 	
 	public void clickButton(WebElement button, String...waitFor) throws DriverException {
 		if (button != null) {
 			button.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -28,10 +26,10 @@ public class ButtonHandler extends BaseHandler {
 	}
 	
 	public void clickButton(String selector, String...waitFor) {
-		WebElement button = driver.findElement(By.cssSelector(selector));
+		WebElement button = findElement(selector);
 		if (button != null) {
 			button.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		}

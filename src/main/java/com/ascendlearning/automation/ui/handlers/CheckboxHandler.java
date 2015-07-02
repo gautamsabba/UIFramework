@@ -1,6 +1,5 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -12,19 +11,18 @@ public class CheckboxHandler extends BaseHandler {
 	}
 	
 	public WebElement getCheckbox(String selector) {
-		WebElement checkbox = driver.findElement(By.cssSelector(selector));
-		return checkbox;
+		return findElement(selector);
 	}
 	
 	public boolean isCheckboxSelected(String selector) {
-		WebElement checkbox = driver.findElement(By.cssSelector(selector));
+		WebElement checkbox = findElement(selector);
 		return checkbox.isSelected();
 	}
 	
 	public void selectCheckbox(WebElement checkbox, String...waitFor) throws DriverException {
 		if (checkbox != null) {
 			checkbox.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -33,10 +31,10 @@ public class CheckboxHandler extends BaseHandler {
 	}
 	
 	public void selectCheckbox(String selector, String...waitFor) throws DriverException {
-		WebElement checkbox = driver.findElement(By.cssSelector(selector));
+		WebElement checkbox = findElement(selector);
 		if (checkbox != null) {
 			checkbox.click();
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {

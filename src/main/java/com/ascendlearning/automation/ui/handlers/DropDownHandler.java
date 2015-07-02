@@ -1,6 +1,5 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -15,7 +14,7 @@ public class DropDownHandler extends BaseHandler {
 	
 	public Select getDropDown(String selector) throws DriverException {
 		Select dropDown = null;
-		WebElement we = driver.findElement(By.cssSelector(selector));
+		WebElement we = findElement(selector);
 		if (we != null) {
 			dropDown = new Select(we);
 		} else {
@@ -27,7 +26,7 @@ public class DropDownHandler extends BaseHandler {
 	public void selectByVisibleText(Select dropDown, String visibleTest, String...waitFor) throws DriverException {
 		if (dropDown != null) {
 			dropDown.selectByVisibleText(visibleTest);
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -38,7 +37,7 @@ public class DropDownHandler extends BaseHandler {
 	public void selectByIndex(Select dropDown, int index, String...waitFor) throws DriverException {
 		if (dropDown != null) {
 			dropDown.selectByIndex(index);
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
@@ -49,7 +48,7 @@ public class DropDownHandler extends BaseHandler {
 	public void selectByValue(Select dropDown, String value, String...waitFor) throws DriverException {
 		if (dropDown != null) {
 			dropDown.selectByValue(value);
-			if (waitFor != null && waitFor.length>0) {
+			if (waitFor != null && waitFor.length > 0) {
 				setDriverWait(waitFor[0]);
 			}
 		} else {
