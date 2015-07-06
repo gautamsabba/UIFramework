@@ -16,55 +16,83 @@ public final class CapabilityGenerator {
 		
 		switch (browserType) {
 			case GlobalProperties.FIREFOX:
-				cap = DesiredCapabilities.firefox();
-				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.browserName"));
-				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.platform"));
-				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.firefox.takesScreenshot"));
-				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.firefox.handlesAlerts"));
-				cap.setCapability("cssSelectorsEnabled", PropertiesRepository.getBoolean("global.browser.capability.firefox.cssSelectorsEnabled"));
-				break;
+			cap = DesiredCapabilities.firefox();
+			cap.setBrowserName(
+					PropertiesRepository.getString("global.browser.capability.browserName"));
+			cap.setJavascriptEnabled(true);
+			cap.setCapability("platform",
+					PropertiesRepository.getString("global.browser.capability.platform"));
+			cap.setCapability("takesScreenshot", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.takesScreenshot"));
+			cap.setCapability("handlesAlerts", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.handlesAlerts"));
+			cap.setCapability("cssSelectorsEnabled", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.cssSelectorsEnabled"));
+			break;
 				
 			case GlobalProperties.CHROME:
-				System.setProperty("webdriver.chrome.driver", PropertiesRepository.getString("global.browser.chrome.driver.executable"));
-				cap = DesiredCapabilities.chrome();
-				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.browserName"));
-				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.platform"));
-				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.chrome.takesScreenshot"));
-				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.chrome.handlesAlerts"));
-				cap.setCapability("cssSelectorsEnabled", PropertiesRepository.getBoolean("global.browser.capability.chrome.cssSelectorsEnabled"));
-				ChromeOptions options = new ChromeOptions();
-				String extensions = PropertiesRepository.getString("global.browser.capability.chrome.extensions");
+			System.setProperty("webdriver.chrome.driver",
+					PropertiesRepository.getString("global.browser.chrome.driver.executable"));
+			cap = DesiredCapabilities.chrome();
+			cap.setBrowserName(
+					PropertiesRepository.getString("global.browser.capability.browserName"));
+			cap.setJavascriptEnabled(true);
+			cap.setCapability("platform",
+					PropertiesRepository.getString("global.browser.capability.platform"));
+			cap.setCapability("takesScreenshot", PropertiesRepository
+					.getBoolean("global.browser.capability.chrome.takesScreenshot"));
+			cap.setCapability("handlesAlerts", PropertiesRepository
+					.getBoolean("global.browser.capability.chrome.handlesAlerts"));
+			cap.setCapability("cssSelectorsEnabled", PropertiesRepository
+					.getBoolean("global.browser.capability.chrome.cssSelectorsEnabled"));
+			ChromeOptions options = new ChromeOptions();
+			String extensions = PropertiesRepository
+					.getString("global.browser.capability.chrome.extensions");
 			if (extensions != null && !extensions.trim().equals("")) {
-					StringTokenizer tokens = new StringTokenizer(extensions, ",");
-					String extensionPath = PropertiesRepository.getString("global.browser.capability.chrome.extensionpath");
-					File[] extFiles = new File[tokens.countTokens()];
-					int i = 0;
+				StringTokenizer tokens = new StringTokenizer(extensions, ",");
+				String extensionPath = PropertiesRepository
+						.getString("global.browser.capability.chrome.extensionpath");
+				File[] extFiles = new File[tokens.countTokens()];
+				int i = 0;
 				while (tokens.hasMoreElements()) {
 					extFiles[i] = new File(extensionPath + "/" + tokens.nextToken());
-						i++;
-					}
-					options.addExtensions(extFiles);
-				}				
-				cap.setCapability(ChromeOptions.CAPABILITY, options);
-				break;
-				
+					i++;
+				}
+				options.addExtensions(extFiles);
+			}
+			cap.setCapability(ChromeOptions.CAPABILITY, options);
+			break;
+
 			case GlobalProperties.IE:				
-				cap = DesiredCapabilities.internetExplorer();
-				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.browserName"));
-				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.platform"));
-				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.ie.takesScreenshot"));
-				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.ie.handlesAlerts"));
-				cap.setCapability("cssSelectorsEnabled", PropertiesRepository.getBoolean("global.browser.capability.ie.cssSelectorsEnabled"));
-				cap.setCapability("requireWindowFocus", PropertiesRepository.getBoolean("global.browser.capability.ie.requireWindowFocus"));
-				break;
+			cap = DesiredCapabilities.internetExplorer();
+			cap.setBrowserName(
+					PropertiesRepository.getString("global.browser.capability.browserName"));
+			cap.setJavascriptEnabled(true);
+			cap.setCapability("platform",
+					PropertiesRepository.getString("global.browser.capability.platform"));
+			cap.setCapability("takesScreenshot", PropertiesRepository
+					.getBoolean("global.browser.capability.ie.takesScreenshot"));
+			cap.setCapability("handlesAlerts",
+					PropertiesRepository.getBoolean("global.browser.capability.ie.handlesAlerts"));
+			cap.setCapability("cssSelectorsEnabled", PropertiesRepository
+					.getBoolean("global.browser.capability.ie.cssSelectorsEnabled"));
+			cap.setCapability("requireWindowFocus", PropertiesRepository
+					.getBoolean("global.browser.capability.ie.requireWindowFocus"));
+			break;
 				
 			default:
-				cap = DesiredCapabilities.firefox();
-				cap.setBrowserName(PropertiesRepository.getString("global.browser.capability.browserName"));
-				cap.setCapability("platform", PropertiesRepository.getString("global.browser.capability.platform"));
-				cap.setCapability("takesScreenshot", PropertiesRepository.getBoolean("global.browser.capability.firefox.takesScreenshot"));
-				cap.setCapability("handlesAlerts", PropertiesRepository.getBoolean("global.browser.capability.firefox.handlesAlerts"));
-				cap.setCapability("cssSelectorsEnabled", PropertiesRepository.getBoolean("global.browser.capability.firefox.cssSelectorsEnabled"));		
+			cap = DesiredCapabilities.firefox();
+			cap.setBrowserName(
+					PropertiesRepository.getString("global.browser.capability.browserName"));
+			cap.setJavascriptEnabled(true);
+			cap.setCapability("platform",
+					PropertiesRepository.getString("global.browser.capability.platform"));
+			cap.setCapability("takesScreenshot", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.takesScreenshot"));
+			cap.setCapability("handlesAlerts", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.handlesAlerts"));
+			cap.setCapability("cssSelectorsEnabled", PropertiesRepository
+					.getBoolean("global.browser.capability.firefox.cssSelectorsEnabled"));
 		}		
 		return cap;
 	}

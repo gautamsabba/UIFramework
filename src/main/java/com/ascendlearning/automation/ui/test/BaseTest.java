@@ -3,6 +3,7 @@ package com.ascendlearning.automation.ui.test;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -29,10 +30,19 @@ public class BaseTest {
 	}
 			
 	@AfterMethod
-	public void tearDown() {
+	public void tearDown(ITestResult result) {		
 		DriverFactory.getInstance().removeDriver();
 	}
 	
+	/**
+	 * Return the driver instance for use in listeners
+	 * 
+	 * @return WebDriver
+	 */
+	public WebDriver getWebDriver() {
+		return driver;
+	}
+
 	/**
 	 * Load the properties file from the classpath
 	 * 
