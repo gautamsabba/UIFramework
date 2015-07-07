@@ -36,8 +36,6 @@ public final class DriverFactory {
 		protected WebDriver initialValue() {
 			
 			String browserType = PropertiesRepository.getString("global.browser.name");
-			System.out.println("BROWSER : " + browserType);
-			logger.info("Browser Type : " + browserType);
 			DesiredCapabilities dc = CapabilityGenerator.getCapabilities(browserType);
 			logger.info("Desired Capabilities : " + dc);
 			

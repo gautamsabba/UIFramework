@@ -1,11 +1,9 @@
 package com.ascendlearning.automation.ui.handlers;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.ascendlearning.automation.ui.exceptions.DriverException;
-import com.ascendlearning.automation.ui.utils.SizzleSelector;
 
 public class TextHandler extends BaseHandler {
 
@@ -14,7 +12,7 @@ public class TextHandler extends BaseHandler {
 	}
 	
 	public WebElement getTextElement(String selector) {
-		WebElement textElement = driver.findElement(By.cssSelector(selector));
+		WebElement textElement = findElement(selector);
 		return textElement;
 	}
 	
@@ -33,7 +31,7 @@ public class TextHandler extends BaseHandler {
 	}
 	
 	public void writeText(String selector, String text, String...waitFor) throws DriverException {
-		WebElement textElement = driver.findElement(By.cssSelector(selector));
+		WebElement textElement = findElement(selector);
 		if (textElement != null) {
 			textElement.click();
 			textElement.clear();
@@ -47,14 +45,12 @@ public class TextHandler extends BaseHandler {
 		}
 	}
 	
-	public String getText(String selector, boolean... useSizzle) {
-		if (useSizzle != null && useSizzle.length > 0 && useSizzle[0]) {
-			SizzleSelector sizzle = new SizzleSelector(driver);
-			WebElement textElement = sizzle.findElementBySizzleCss(selector);
-			return textElement.getText();
+	public String getText(String selector) throws DriverException {
+		WebElement textElement = findElement(selector);
+		if (textElement != null) {
+		return textElement.getText();
 		} else {
-			WebElement textElement = driver.findElement(By.cssSelector(selector));
-			return (textElement != null) ? textElement.getText() : null;
+			throw new DriverException("Unable to locate text element");
 		}
 	}
 }
