@@ -16,10 +16,16 @@ public class BaseHandler {
 		driver = webDriver;		
 	}
 	
-	protected void setDriverWait(String selector) {
+	protected void setDriverWait(String cssSelector) {
 		WebDriverWait driverWait = new WebDriverWait(driver, GlobalProperties.EXPLICIT_WAIT);
-		driverWait.until(ExpectedConditions
-				.visibilityOfElementLocated(ByCssSelectorExtended.cssSelector(selector)));
+		driverWait.until(ExpectedConditions.visibilityOfElementLocated(
+				ByCssSelectorExtended.cssSelector(driver, cssSelector)));
+	}
+
+	protected void setDriverWait(WebDriver webDriver, String cssSelector) {
+		WebDriverWait driverWait = new WebDriverWait(webDriver, GlobalProperties.EXPLICIT_WAIT);
+		driverWait.until(ExpectedConditions.visibilityOfElementLocated(
+				ByCssSelectorExtended.cssSelector(webDriver, cssSelector)));
 	}
 
 	protected WebElement findElement(String cssSelector) {

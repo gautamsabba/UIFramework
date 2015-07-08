@@ -37,7 +37,6 @@ public class SizzleSelector {
 	 * @return the web element
 	 */
 	public WebElement findElementBySizzleCss(SearchContext context, String cssLocator) {
-		System.out.println("USING SIZZLE");
 		List<WebElement> elements = findElementsBySizzleCss(context, cssLocator);
 		if (elements != null && elements.size() > 0) {
 			return elements.get(0);

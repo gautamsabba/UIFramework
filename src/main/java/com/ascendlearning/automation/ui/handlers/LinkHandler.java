@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import com.ascendlearning.automation.ui.exceptions.DriverException;
 
 public class LinkHandler extends BaseHandler {
+
 	public LinkHandler(WebDriver driver) {
 		super(driver);
 	}
@@ -23,6 +24,20 @@ public class LinkHandler extends BaseHandler {
 		}
 	}
 	
+	public WindowHandler selectLinkToLaunchNewWindow(String selector, String... waitFor)
+			throws DriverException {
+		WebElement link = findElement(selector);
+		WindowHandler windowHandler = null;
+		if (link != null) {
+			link.click();
+			windowHandler = new WindowHandler(driver);
+			windowHandler.switchToLatestWindow(waitFor);
+		} else {
+			throw new DriverException("Unable to locate link element");
+		}
+		return windowHandler;
+	}
+
 	public void selectLinkByText(String text, boolean exactMatch, String...waitFor) throws DriverException {
 		WebElement link = (exactMatch == true) ? driver.findElement(By.linkText(text))
 				: driver.findElement(By.partialLinkText(text));

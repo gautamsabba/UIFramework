@@ -12,13 +12,16 @@ import com.google.common.collect.Iterables;
 public class WindowHandler extends BaseHandler {
 
 	private Logger logger = LogHandler.getLogger(this.getClass());
+
+	WebDriver currentDriver = null;
 	  
 	public WindowHandler(WebDriver driver) {
 		super(driver);
+		currentDriver = driver;
 	}
   
     public WebDriver switchToMainWindow(String...waitFor) {
-        driver.switchTo().defaultContent();
+		currentDriver = driver.switchTo().defaultContent();
         logger.info("Switching to main window");
 		if (waitFor != null && waitFor.length > 0) {
 			setDriverWait(waitFor[0]);
@@ -27,16 +30,19 @@ public class WindowHandler extends BaseHandler {
     }
 
     public WebDriver switchToLatestWindow(String...waitFor) {
-    	driver.switchTo().window(Iterables.getLast(driver.getWindowHandles()));
-    	logger.info("Switching to window : " + driver.getWindowHandle());
+		currentDriver = driver.switchTo().window(Iterables.getLast(driver.getWindowHandles()));
+		logger.info("Switching to window : " + driver.getTitle());
+		if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(driver, waitFor[0]);
+		}
     	return driver;
     }
     
     public WebDriver switchToWindow(String name, String...waitFor) {
-    	driver.switchTo().window(name);
-    	logger.info("Switching to window : " + driver.getWindowHandle());
+		currentDriver = driver.switchTo().window(name);
+		logger.info("Switching to window : " + driver.getTitle());
 		if (waitFor != null && waitFor.length > 0) {
-			setDriverWait(waitFor[0]);
+			setDriverWait(driver, waitFor[0]);
 		}
     	return driver;
     }
@@ -45,12 +51,21 @@ public class WindowHandler extends BaseHandler {
 		WebElement activeElement = driver.switchTo().activeElement();
 		logger.info("Switching to active element : " + activeElement.getText());
 		if (waitFor != null && waitFor.length > 0) {
-			setDriverWait(waitFor[0]);
+			setDriverWait(driver, waitFor[0]);
 		}
 		return activeElement;
 	}
 
-    public Iterator<String> getWindowNames() {
-    	return driver.getWindowHandles().iterator();
+	public void cleanUp(WebDriver webDriver) {
+		Iterator<String> handles = webDriver.getWindowHandles().iterator();
+		while (handles.hasNext()) {
+			String handle = handles.next();
+			WebDriver local = switchToWindow(handle);
+			local.close();
+		}
     }
+
+	public WebDriver getCurrentWindow() {
+		return currentDriver;
+	}
 }
