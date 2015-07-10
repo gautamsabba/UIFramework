@@ -48,7 +48,16 @@ public class TextHandler extends BaseHandler {
 	public String getText(String selector) throws DriverException {
 		WebElement textElement = findElement(selector);
 		if (textElement != null) {
-		return textElement.getText();
+			return textElement.getText();
+		} else {
+			throw new DriverException("Unable to locate text element");
+		}
+	}
+	
+	public String getTextFromValueAttr(String selector) throws DriverException {
+		WebElement textElement = findElement(selector);
+		if (textElement != null) {
+			return textElement.getAttribute("value");
 		} else {
 			throw new DriverException("Unable to locate text element");
 		}
