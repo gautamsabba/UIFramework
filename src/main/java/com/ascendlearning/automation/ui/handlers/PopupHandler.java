@@ -1,9 +1,17 @@
 package com.ascendlearning.automation.ui.handlers;
 
+import java.util.Iterator;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
+import com.ascendlearning.automation.ui.logging.LogHandler;
+import com.google.common.base.Splitter;
+
 public class PopupHandler extends BaseHandler {
+	
+	private Logger logger = LogHandler.getLogger(this.getClass());
 	  
 	public PopupHandler(WebDriver driver) {
 		super(driver);
@@ -26,10 +34,35 @@ public class PopupHandler extends BaseHandler {
 		}
     }
     
-    public String getAlertText() {
+    public Alert switchToAlert(String...waitFor) {
     	driver.switchTo().defaultContent();
-    	Alert alert = driver.switchTo().alert();
-    	return alert.getText();
+		Alert alert = driver.switchTo().alert();
+        logger.info("Switching to alert");
+		if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(waitFor[0]);
+		}
+        return alert;
     }
-	
+    
+    public String getAlertText(String...waitFor) {
+    	driver.switchTo().defaultContent();
+    	Alert alert = switchToAlert(waitFor);
+        logger.info("Switching to alert");
+		if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(waitFor[0]);
+		}
+		return alert.getText();
+    }
+    
+    public void loginWithoutPopup(String urlWithoutHTTP, 
+    								String userName, 
+    								String password, 
+    								String...waitFor) {    	
+    	String newURL = "http://" + userName + ":" + "password" + "@" + urlWithoutHTTP;
+    	driver.get(newURL);
+    	if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(waitFor[0]);
+		}
+    }
+    
 }
