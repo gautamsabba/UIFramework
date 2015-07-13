@@ -97,6 +97,11 @@
 			<artifactId>jquery-maven</artifactId>
 			<version>1.8.2</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>		
 	</dependencies>
 	<build>
 	<pluginManagement>
