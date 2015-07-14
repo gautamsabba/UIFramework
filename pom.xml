@@ -116,7 +116,12 @@
 			<groupId>net.sf.supercsv</groupId>
 			<artifactId>super-csv-joda</artifactId>
 			<version>2.3.1</version>
-		</dependency>				
+		</dependency>
+		<dependency> 
+			<groupId>com.microsoft.sqlserver</groupId> 
+			<artifactId>sqljdbc41</artifactId> 
+			<version>4.1</version>
+		</dependency>			
 	</dependencies>
 	<build>
 	<pluginManagement>

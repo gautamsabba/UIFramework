@@ -49,6 +49,17 @@ public class WindowHandler extends BaseHandler {
     	return driver;
     }
     
+    public void closeWindow(String windowHandle, String...waitFor) {
+    	WebDriver local = switchToWindow(windowHandle);		
+		logger.info("Switching to window : " + driver.getTitle());
+		if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(driver, waitFor[0]);
+		}
+		if (local != null) {
+			local.close();
+		}
+    }
+    
 	public WebElement switchToModalDialog(String...waitFor) {
 		WebElement activeElement = driver.switchTo().activeElement();
 		logger.info("Switching to active element : " + activeElement.getText());
@@ -76,6 +87,15 @@ public class WindowHandler extends BaseHandler {
     	return driver;
 	}
 	
+	public WebDriver switchToParentFrame(String...waitFor) {
+		currentDriver = driver.switchTo().parentFrame();
+		logger.info("Switching to parent frame : " + currentDriver.getTitle());
+		if (waitFor != null && waitFor.length > 0) {
+			setDriverWait(driver, waitFor[0]);
+		}
+    	return driver;
+	}
+	
 	public String[] listFrames(String...waitFor) {
 		final List <WebElement> iframes = driver.findElements(By.tagName("iframe"));
 		int size = iframes.size();
@@ -95,7 +115,9 @@ public class WindowHandler extends BaseHandler {
 		while (handles.hasNext()) {
 			String handle = handles.next();
 			WebDriver local = switchToWindow(handle);
-			local.close();
+			if (local != null) {
+				local.close();
+			}
 		}
     }
 
