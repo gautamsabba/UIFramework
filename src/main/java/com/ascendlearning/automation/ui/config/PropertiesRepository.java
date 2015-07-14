@@ -31,6 +31,7 @@ public final class PropertiesRepository {
 		try {
 			LogManager.getLogger(PropertiesRepository.class).info("Loading property file : " + propertiesFile);
 			properties = new PropertiesConfiguration(propertiesFile);
+			properties.setDelimiterParsingDisabled(true);
 		} catch (ConfigurationException ce) {
 			throw new DriverException("Unable to load properties", ce);
 		}		
