@@ -58,7 +58,7 @@ public class PopupHandler extends BaseHandler {
     								String userName, 
     								String password, 
     								String...waitFor) {    	
-    	String newURL = "http://" + userName + ":" + "password" + "@" + urlWithoutHTTP;
+    	String newURL = "http://" + userName + ":" + password + "@" + urlWithoutHTTP;
     	driver.get(newURL);
     	if (waitFor != null && waitFor.length > 0) {
 			setDriverWait(waitFor[0]);
