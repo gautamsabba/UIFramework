@@ -36,13 +36,15 @@ public class SizzleSelector {
 	 *            the cssLocator
 	 * @return the web element
 	 */
-	public WebElement findElementBySizzleCss(SearchContext context, String cssLocator) {
+	public WebElement findElementBySizzleCss(SearchContext context,
+			String cssLocator) {
 		List<WebElement> elements = findElementsBySizzleCss(context, cssLocator);
 		if (elements != null && elements.size() > 0) {
 			return elements.get(0);
 		}
 		// if we get here, we cannot find the element via Sizzle.
-		throw new NoSuchElementException("selector '" + cssLocator + "' cannot be found in DOM");
+		throw new NoSuchElementException("selector '" + cssLocator
+				+ "' cannot be found in DOM");
 	}
 
 	/**
@@ -52,12 +54,13 @@ public class SizzleSelector {
 	 *            the cssLocator
 	 * @return the list of the web elements that match this locator
 	 */
-	public List<WebElement> findElementsBySizzleCss(SearchContext context, String cssLocator) {
+	public List<WebElement> findElementsBySizzleCss(SearchContext context,
+			String cssLocator) {
 		injectSizzleIfNeeded();
 		String javascriptExpression = createSizzleSelectorExpression(cssLocator);
 		List<WebElement> elements = executeRemoteScript(javascriptExpression);
 		if (elements.size() > 0) {
-			for (WebElement el : elements) { 
+			for (WebElement el : elements) {
 				fixLocator(context, cssLocator, el);
 			}
 		}
@@ -68,16 +71,19 @@ public class SizzleSelector {
 		return "return Sizzle(\"" + using + "\")";
 	}
 
-	private void fixLocator(SearchContext context, String cssLocator, WebElement element) {
+	private void fixLocator(SearchContext context, String cssLocator,
+			WebElement element) {
 
 		if (element instanceof RemoteWebElement) {
 			try {
 				@SuppressWarnings("rawtypes")
-				Class[] parameterTypes = new Class[] { SearchContext.class, String.class,
-						String.class };
-				Method m = element.getClass().getDeclaredMethod("setFoundBy", parameterTypes);
+				Class[] parameterTypes = new Class[] { SearchContext.class,
+						String.class, String.class };
+				Method m = element.getClass().getDeclaredMethod("setFoundBy",
+						parameterTypes);
 				m.setAccessible(true);
-				Object[] parameters = new Object[] { context, "css selector", cssLocator };
+				Object[] parameters = new Object[] { context, "css selector",
+						cssLocator };
 				m.invoke(element, parameters);
 			} catch (Exception fail) {
 				// NOOP Would like to log here?
@@ -85,17 +91,21 @@ public class SizzleSelector {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private final List<WebElement> executeRemoteScript(String javascriptExpression) {
+	private final List<WebElement> executeRemoteScript(
+			String javascriptExpression) {
 		List<WebElement> list = null;
 		JavascriptExecutor executor = driver;
 
 		try {
-			list = (List<WebElement>) executor.executeScript(javascriptExpression);
+			list = (List<WebElement>) executor
+					.executeScript(javascriptExpression);
 		} catch (WebDriverException wde) {
 			if (wde.getMessage().contains("Sizzle is not defined")) {
-				logger.error("Attempt to execute the code '" + javascriptExpression
-						+ "' has failed - Sizzle was not detected. Trying once more", wde);
+				logger.error(
+						"Attempt to execute the code '"
+								+ javascriptExpression
+								+ "' has failed - Sizzle was not detected. Trying once more",
+						wde);
 				// we wait for 1/2 sec
 				try {
 					Thread.sleep(500);
@@ -104,7 +114,8 @@ public class SizzleSelector {
 				// try to inject sizzle once more.
 				injectSizzleIfNeeded();
 				// now, try again to execute
-				list = (List<WebElement>) executor.executeScript(javascriptExpression);
+				list = (List<WebElement>) executor
+						.executeScript(javascriptExpression);
 			} else { // not a Sizzle case, just throw it
 				throw wde;
 			}
@@ -147,7 +158,8 @@ public class SizzleSelector {
 		}
 		// sizzle is not loaded yet
 		throw new RuntimeException(
-				"Sizzle loading from local director has failed - " + "provide a better sizzle URL");
+				"Sizzle loading from local director has failed - "
+						+ "provide a better sizzle URL");
 	}
 
 	/**
@@ -162,7 +174,9 @@ public class SizzleSelector {
 					.executeScript("return (window.Sizzle != null);");
 
 		} catch (WebDriverException e) {
-			logger.error("While trying to verify Sizzle loading, WebDriver threw exception", e);
+			logger.error(
+					"While trying to verify Sizzle loading, WebDriver threw exception",
+					e);
 			loaded = false;
 		}
 		return loaded;
@@ -172,8 +186,7 @@ public class SizzleSelector {
 		String scriptContent = null;
 		try {
 			URL sizzleFile = Resources.getResource("sizzle.min.js");
-			scriptContent = Resources.toString(sizzleFile,
-					Charsets.UTF_8);
+			scriptContent = Resources.toString(sizzleFile, Charsets.UTF_8);
 		} catch (IOException e) {
 			logger.error("Unable to read local sizzle file", e);
 		}
@@ -181,12 +194,14 @@ public class SizzleSelector {
 				+ "var newScript = document.createElement('script');"
 				+ "newScript.type = 'text/javascript';";
 		if (scriptContent != null) {
-			execulatbleScript = execulatbleScript + "newScript.text = " + scriptContent;
+			execulatbleScript = execulatbleScript + "newScript.text = "
+					+ scriptContent;
 		} else {
 			execulatbleScript = execulatbleScript
 					+ "newScript.src = 'https://raw.githubusercontent.com/jquery/sizzle/master/src/sizzle.js';";
 		}
-		execulatbleScript = execulatbleScript + "headID.appendChild(newScript);";
+		execulatbleScript = execulatbleScript
+				+ "headID.appendChild(newScript);";
 		driver.executeScript(execulatbleScript);
 	}
 }
