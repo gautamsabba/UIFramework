@@ -27,6 +27,24 @@ public class VerificationHandler {
 		}
 	}
 
+	public static void verifyTrue(boolean flag, String control) {
+		try {
+			Assert.assertTrue(flag, control);
+		} catch (AssertionError e) {
+			logger.error("False returned", e);
+			Assert.fail("False returned", e);
+		}
+	}
+
+	public static void verifyFalse(boolean flag, String control) {
+		try {
+			Assert.assertFalse(flag, control);
+		} catch (AssertionError e) {
+			logger.error("True returned", e);
+			Assert.fail("True returned", e);
+		}
+	}
+
 	public static void verifyEquals(String actual, String control) {
 		try {
 			Assert.assertEquals(actual, control);
