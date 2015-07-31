@@ -48,105 +48,116 @@ public class FileDownloader {
 	private RequestMethod httpRequestMethod = RequestMethod.GET;
 	private URI fileURI;
 
-  public FileDownloader(WebDriver driverObject) {
+	public FileDownloader(WebDriver driverObject) {
 		this.driver = driverObject;
-  }
+	}
 
-  /**
-   * Specify if the FileDownloader class should follow redirects when trying to download a file
-   * Default: true
-   *
-   * @param followRedirects boolean
-   */
-  public void followRedirectsWhenDownloading(boolean followRedirects) {
+	/**
+	 * Specify if the FileDownloader class should follow redirects when trying to download a file
+	 * Default: true
+	 *
+	 * @param followRedirects
+	 *            boolean
+	 */
+	public void followRedirectsWhenDownloading(boolean followRedirects) {
 		this.followRedirects = followRedirects;
-  }
+	}
 
-  /**
-   * Mimic the cookie state of WebDriver (Defaults to true)
-   * This will enable you to access files that are only available when logged in.
-   * If set to false the connection will be made as an anonymouse user
-   *
-   * @param mimicWebDriverCookies boolean
-   */
-  public void mimicWebDriverCookieState(boolean mimicWebDriverCookies) {
+	/**
+	 * Mimic the cookie state of WebDriver (Defaults to true) This will enable you to access files
+	 * that are only available when logged in. If set to false the connection will be made as an
+	 * anonymouse user
+	 *
+	 * @param mimicWebDriverCookies
+	 *            boolean
+	 */
+	public void mimicWebDriverCookieState(boolean mimicWebDriverCookies) {
 		mimicWebDriverCookieState = mimicWebDriverCookies;
-  }
+	}
 
-  /**
-   * Set the HTTP Request Method
-   * Default: GET
-   *
-   * @param requestType RequestMethod
-   */
-  public void setHTTPRequestMethod(RequestMethod requestType) {
+	/**
+	 * Set the HTTP Request Method Default: GET
+	 *
+	 * @param requestType
+	 *            RequestMethod
+	 */
+	public void setHTTPRequestMethod(RequestMethod requestType) {
 		httpRequestMethod = requestType;
-  }
+	}
 
-  /**
-   * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
-   *
-   * @param linkToFile String
-   * @throws MalformedURLException
-   * @throws URISyntaxException
-   */
-  public void setURI(String linkToFile) throws MalformedURLException, URISyntaxException {
+	/**
+	 * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
+	 *
+	 * @param linkToFile
+	 *            String
+	 * @throws MalformedURLException
+	 * @throws URISyntaxException
+	 */
+	public void setURI(String linkToFile) throws MalformedURLException, URISyntaxException {
 		fileURI = new URI(linkToFile);
-  }
+	}
 
-  /**
-   * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
-   *
-   * @param linkToFile URI
-   * @throws MalformedURLException
-   */
-  public void setURI(URI linkToFile) throws MalformedURLException {
+	/**
+	 * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
+	 *
+	 * @param linkToFile
+	 *            URI
+	 * @throws MalformedURLException
+	 */
+	public void setURI(URI linkToFile) throws MalformedURLException {
 		fileURI = linkToFile;
-  }
+	}
 
-  /**
-   * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
-   *
-   * @param linkToFile URL
-   */
-  public void setURI(URL linkToFile) throws URISyntaxException {
+	/**
+	 * Specify a URL that you want to perform an HTTP Status Check upon/Download a file from
+	 *
+	 * @param linkToFile
+	 *            URL
+	 */
+	public void setURI(URL linkToFile) throws URISyntaxException {
 		fileURI = linkToFile.toURI();
-  }
+	}
 
-  /**
-   * Perform an HTTP Status Check upon/Download the file specified in the href attribute of a WebElement
-   *
-   * @param anchorElement Selenium WebElement
-   * @throws Exception
-   */
-  public void setURISpecifiedInAnchorElement(WebElement anchorElement) throws Exception {
+	/**
+	 * Perform an HTTP Status Check upon/Download the file specified in the href attribute of a
+	 * WebElement
+	 *
+	 * @param anchorElement
+	 *            Selenium WebElement
+	 * @throws Exception
+	 */
+	public void setURISpecifiedInAnchorElement(WebElement anchorElement) throws Exception {
 		if (anchorElement.getTagName().equals("a")) {
 			fileURI = new URI(anchorElement.getAttribute("href"));
 		} else {
 			throw new Exception("You have not specified an <a> element!");
 		}
-  }
+	}
 
-  /**
-   * Perform an HTTP Status Check upon/Download the image specified in the src attribute of a WebElement
-   *
-   * @param imageElement Selenium WebElement
-   * @throws Exception
-   */
-  public void setURISpecifiedInImageElement(WebElement imageElement) throws Exception {
+	/**
+	 * Perform an HTTP Status Check upon/Download the image specified in the src attribute of a
+	 * WebElement
+	 *
+	 * @param imageElement
+	 *            Selenium WebElement
+	 * @throws Exception
+	 */
+	public void setURISpecifiedInImageElement(WebElement imageElement) throws Exception {
 		if (imageElement.getTagName().equals("img")) {
 			fileURI = new URI(imageElement.getAttribute("src"));
 		} else {
 			throw new Exception("You have not specified an <img> element!");
 		}
-  }
+	}
 
-  /**
-   * Load in all the cookies WebDriver currently knows about so that we can mimic the browser cookie state
-   *
-   * @param seleniumCookieSet Set&lt;Cookie&gt;
-   */
-  private BasicCookieStore mimicCookieState(Set<Cookie> seleniumCookieSet) {
+	/**
+	 * Load in all the cookies WebDriver currently knows about so that we can mimic the browser
+	 * cookie state
+	 *
+	 * @param seleniumCookieSet
+	 *            Set&lt;Cookie&gt;
+	 */
+	private BasicCookieStore mimicCookieState(Set<Cookie> seleniumCookieSet) {
 		BasicCookieStore copyOfWebDriverCookieStore = new BasicCookieStore();
 		for (Cookie seleniumCookie : seleniumCookieSet) {
 			BasicClientCookie duplicateCookie = new BasicClientCookie(seleniumCookie.getName(),
@@ -161,7 +172,7 @@ public class FileDownloader {
 		return copyOfWebDriverCookieStore;
 	}
 
-  private HttpResponse getHTTPResponse() throws IOException, NullPointerException {
+	private HttpResponse getHTTPResponse() throws IOException, NullPointerException {
 		if (fileURI == null) {
 			throw new NullPointerException("No file URI specified");
 		}
@@ -190,16 +201,15 @@ public class FileDownloader {
 
 		LOG.info("Sending " + httpRequestMethod.toString() + " request for: " + fileURI);
 		return client.execute(requestMethod, localContext);
-  }
+	}
 
-
-  /**
-   * Gets the HTTP status code returned when trying to access the specified URI
-   *
-   * @return File
-   * @throws Exception
-   */
-  public int getLinkHTTPStatus() throws Exception {
+	/**
+	 * Gets the HTTP status code returned when trying to access the specified URI
+	 *
+	 * @return File
+	 * @throws Exception
+	 */
+	public int getLinkHTTPStatus() throws Exception {
 		HttpResponse fileToDownload = getHTTPResponse();
 		int httpStatusCode;
 		try {
@@ -209,15 +219,15 @@ public class FileDownloader {
 		}
 
 		return httpStatusCode;
-  }
+	}
 
-  /**
-   * Download a file from the specified URI
-   *
-   * @return File
-   * @throws Exception
-   */
-  public File downloadFile() throws Exception {
+	/**
+	 * Download a file from the specified URI
+	 *
+	 * @return File
+	 * @throws Exception
+	 */
+	public File downloadFile() throws Exception {
 		File downloadedFile = File.createTempFile("download", ".tmp");
 		HttpResponse fileToDownload = getHTTPResponse();
 		try {
@@ -228,5 +238,5 @@ public class FileDownloader {
 		}
 
 		return downloadedFile;
-  }
+	}
 }
