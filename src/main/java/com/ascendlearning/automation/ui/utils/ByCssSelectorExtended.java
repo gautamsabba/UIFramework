@@ -26,8 +26,9 @@ public class ByCssSelectorExtended extends ByCssSelector {
 	}
 
 	public static By cssSelector(WebDriver webDriver, final String selector) {
-		if (selector == null)
+		if (selector == null) {
 			throw new IllegalArgumentException("Cannot find elements when the selector is null");
+		}
 		return new ByCssSelectorExtended(webDriver, selector);
 	}
 
@@ -76,5 +77,19 @@ public class ByCssSelectorExtended extends ByCssSelector {
 		}
 		throw new WebDriverException(
 				"Driver does not support finding an element by selector: " + ownSelector);
+	}
+
+	public boolean isDisplayed(WebElement we) {
+		if (we == null) {
+			throw new WebDriverException("WebElement is null");
+		}
+		return we.isDisplayed();
+	}
+
+	public boolean isEnabled(WebElement we) {
+		if (we == null) {
+			throw new WebDriverException("WebElement is null");
+		}
+		return we.isEnabled();
 	}
 }
