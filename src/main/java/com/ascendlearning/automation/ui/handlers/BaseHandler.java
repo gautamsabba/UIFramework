@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +20,7 @@ public class BaseHandler {
 		driver = webDriver;
 	}
 
-	protected void setDriverWait(String cssSelector) {
+	public void setDriverWait(String cssSelector) {
 		WebDriverWait driverWait = new WebDriverWait(driver,
 				GlobalProperties.EXPLICIT_WAIT);
 		driverWait.until(ExpectedConditions
@@ -27,7 +28,7 @@ public class BaseHandler {
 						driver, cssSelector)));
 	}
 
-	protected void setDriverWait(WebDriver webDriver, String cssSelector) {
+	public void setDriverWait(WebDriver webDriver, String cssSelector) {
 		WebDriverWait driverWait = new WebDriverWait(webDriver,
 				GlobalProperties.EXPLICIT_WAIT);
 		driverWait.until(ExpectedConditions
@@ -35,7 +36,7 @@ public class BaseHandler {
 						webDriver, cssSelector)));
 	}
 
-	protected void waitForPageToLoad(String cssSelector) {
+	public void waitForPageToLoad(String cssSelector) {
 		ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() {
 			@Override
 			public Boolean apply(WebDriver driver) {
@@ -48,7 +49,7 @@ public class BaseHandler {
 		wait.until(pageLoadCondition);
 	}
 
-	protected WebDriver waitForFrameToLoadAndSwitchToIt(String cssSelector) {
+	public WebDriver waitForFrameToLoadAndSwitchToIt(String cssSelector) {
 		WebDriverWait wait = new WebDriverWait(driver,
 				GlobalProperties.EXPLICIT_WAIT);
 		wait.until(ExpectedConditions
@@ -57,13 +58,34 @@ public class BaseHandler {
 		return driver;
 	}
 
-	protected WebElement findElement(String cssSelector) {
+	public WebElement findElement(String cssSelector) {
 		return driver.findElement(ByCssSelectorExtended.cssSelector(driver,
 				cssSelector));
 	}
 
-	protected List<WebElement> findElements(String cssSelector) {
+	public List<WebElement> findElements(String cssSelector) {
 		return driver.findElements(ByCssSelectorExtended.cssSelector(driver,
 				cssSelector));
+	}
+
+	public boolean isDisplayed(WebElement we) {
+		if (we == null) {
+			throw new WebDriverException("WebElement is null");
+		}
+		return we.isDisplayed();
+	}
+
+	public boolean isEnabled(WebElement we) {
+		if (we == null) {
+			throw new WebDriverException("WebElement is null");
+		}
+		return we.isEnabled();
+	}
+
+	public boolean isSelected(WebElement we) {
+		if (we == null) {
+			throw new WebDriverException("WebElement is null");
+		}
+		return we.isSelected();
 	}
 }

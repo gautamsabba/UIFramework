@@ -13,9 +13,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.FindsByCssSelector;
 
 public class ByCssSelectorExtended extends ByCssSelector {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String ownSelector;
 	private WebDriver driver = null;
 
@@ -27,7 +27,8 @@ public class ByCssSelectorExtended extends ByCssSelector {
 
 	public static By cssSelector(WebDriver webDriver, final String selector) {
 		if (selector == null) {
-			throw new IllegalArgumentException("Cannot find elements when the selector is null");
+			throw new IllegalArgumentException(
+					"Cannot find elements when the selector is null");
 		}
 		return new ByCssSelectorExtended(webDriver, selector);
 	}
@@ -36,60 +37,56 @@ public class ByCssSelectorExtended extends ByCssSelector {
 	public List<WebElement> findElements(SearchContext context) {
 		try {
 			if (context instanceof FindsByCssSelector) {
-				return ((FindsByCssSelector) context) 
-		           .findElementsByCssSelector(ownSelector);
+				return ((FindsByCssSelector) context)
+						.findElementsByCssSelector(ownSelector);
 			}
 
 		} catch (InvalidSelectorException e) {
-			return new SizzleSelector(driver).findElementsBySizzleCss(context, ownSelector);
+			return new SizzleSelector(driver).findElementsBySizzleCss(context,
+					ownSelector);
 
 		} catch (InvalidElementStateException e) {
-			return new SizzleSelector(driver).findElementsBySizzleCss(context, ownSelector);
+			return new SizzleSelector(driver).findElementsBySizzleCss(context,
+					ownSelector);
 
 		} catch (WebDriverException e) {
-			if (e.getMessage().contains("An invalid or illegal string was specified")) {
-				return new SizzleSelector(driver).findElementsBySizzleCss(context, ownSelector);
+			if (e.getMessage().contains(
+					"An invalid or illegal string was specified")) {
+				return new SizzleSelector(driver).findElementsBySizzleCss(
+						context, ownSelector);
 			}
 			throw e;
 		}
 		throw new WebDriverException(
-				"Driver does not support finding an element by selector: " + ownSelector);
+				"Driver does not support finding an element by selector: "
+						+ ownSelector);
 	}
 
 	@Override
 	public WebElement findElement(SearchContext context) {
 		try {
 			if (context instanceof FindsByCssSelector) {
-				return ((FindsByCssSelector) context).findElementByCssSelector(ownSelector);
+				return ((FindsByCssSelector) context)
+						.findElementByCssSelector(ownSelector);
 			}
 		} catch (InvalidSelectorException e) {
-			return new SizzleSelector(driver).findElementBySizzleCss(context, ownSelector);
+			return new SizzleSelector(driver).findElementBySizzleCss(context,
+					ownSelector);
 
 		} catch (InvalidElementStateException e) {
-			return new SizzleSelector(driver).findElementBySizzleCss(context, ownSelector);
+			return new SizzleSelector(driver).findElementBySizzleCss(context,
+					ownSelector);
 
 		} catch (WebDriverException e) {
 			if (e.getMessage().toLowerCase()
 					.contains("An invalid or illegal string was specified")) {
-				return new SizzleSelector(driver).findElementBySizzleCss(context, ownSelector);
+				return new SizzleSelector(driver).findElementBySizzleCss(
+						context, ownSelector);
 			}
 			throw e;
 		}
 		throw new WebDriverException(
-				"Driver does not support finding an element by selector: " + ownSelector);
-	}
-
-	public boolean isDisplayed(WebElement we) {
-		if (we == null) {
-			throw new WebDriverException("WebElement is null");
-		}
-		return we.isDisplayed();
-	}
-
-	public boolean isEnabled(WebElement we) {
-		if (we == null) {
-			throw new WebDriverException("WebElement is null");
-		}
-		return we.isEnabled();
+				"Driver does not support finding an element by selector: "
+						+ ownSelector);
 	}
 }

@@ -11,8 +11,9 @@ public class LinkHandler extends BaseHandler {
 	public LinkHandler(WebDriver driver) {
 		super(driver);
 	}
-	
-	public void selectLink(String selector, String...waitFor) throws DriverException {
+
+	public void selectLink(String selector, String... waitFor)
+			throws DriverException {
 		WebElement link = findElement(selector);
 		if (link != null) {
 			link.click();
@@ -23,9 +24,9 @@ public class LinkHandler extends BaseHandler {
 			throw new DriverException("Unable to locate link element");
 		}
 	}
-	
-	public WindowHandler selectLinkToLaunchNewWindow(String selector, String... waitFor)
-			throws DriverException {
+
+	public WindowHandler selectLinkToLaunchNewWindow(String selector,
+			String... waitFor) throws DriverException {
 		WebElement link = findElement(selector);
 		WindowHandler windowHandler = null;
 		if (link != null) {
@@ -38,9 +39,10 @@ public class LinkHandler extends BaseHandler {
 		return windowHandler;
 	}
 
-	public void selectLinkByText(String text, boolean exactMatch, String...waitFor) throws DriverException {
-		WebElement link = (exactMatch == true) ? driver.findElement(By.linkText(text))
-				: driver.findElement(By.partialLinkText(text));
+	public void selectLinkByText(String text, boolean exactMatch,
+			String... waitFor) throws DriverException {
+		WebElement link = (exactMatch == true) ? driver.findElement(By
+				.linkText(text)) : driver.findElement(By.partialLinkText(text));
 		if (link != null) {
 			link.click();
 			if (waitFor != null && waitFor.length > 0) {
