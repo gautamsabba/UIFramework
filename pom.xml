@@ -176,6 +176,12 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.11</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -190,58 +196,24 @@
 						<target>1.8</target>
 					</configuration>
 				</plugin>
-				<!-- plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.18.1</version>
-					<configuration>
-						<suiteXmlFiles>
-							<suiteXmlFile>testng.xml</suiteXmlFile>
-						</suiteXmlFiles>
-						<testFailureIgnore>true</testFailureIgnore>
-						<argLine>
-							-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-						</argLine>
-						<includes>
-							<include>**/Test*.java</include>
-							<include>**/*Tests*.java</include>
-							<include>**/*Tests.java</include>
-							<include>**/*Test.java</include>
-							<include>**/*TestCase.java</include>
-						</includes>
-					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.aspectj</groupId>
-							<artifactId>aspectjweaver</artifactId>
-							<version>${aspectj.version}</version>
-						</dependency>
-					</dependencies>
-				</plugin-->
+				<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+					<version>2.18.1</version> <configuration> <suiteXmlFiles> <suiteXmlFile>testng.xml</suiteXmlFile> 
+					</suiteXmlFiles> <testFailureIgnore>true</testFailureIgnore> <argLine> -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" 
+					</argLine> <includes> <include>**/Test*.java</include> <include>**/*Tests*.java</include> 
+					<include>**/*Tests.java</include> <include>**/*Test.java</include> <include>**/*TestCase.java</include> 
+					</includes> </configuration> <dependencies> <dependency> <groupId>org.aspectj</groupId> 
+					<artifactId>aspectjweaver</artifactId> <version>${aspectj.version}</version> 
+					</dependency> </dependencies> </plugin -->
 				<!--Needed only to show reports locally. Run jetty:run and open localhost:8080 
 					to show the report -->
-				<!-- plugin>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version> 9.3.3.v20150827</version>
-					<configuration>
-						<webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
-						<stopKey>stop</stopKey>
-						<stopPort>1234</stopPort>
-					</configuration>
-				</plugin-->
+				<!-- plugin> <groupId>org.eclipse.jetty</groupId> <artifactId>jetty-maven-plugin</artifactId> 
+					<version> 9.3.3.v20150827</version> <configuration> <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory> 
+					<stopKey>stop</stopKey> <stopPort>1234</stopPort> </configuration> </plugin -->
 			</plugins>
 		</pluginManagement>
 	</build>
 
-	<!-- reporting>
-		<excludeDefaults>true</excludeDefaults>
-		<plugins>
-			<plugin>
-				<groupId>ru.yandex.qatools.allure</groupId>
-				<artifactId>allure-maven-plugin</artifactId>
-				<version>2.2</version>
-			</plugin>
-		</plugins>
-	</reporting-->
+	<!-- reporting> <excludeDefaults>true</excludeDefaults> <plugins> <plugin> 
+		<groupId>ru.yandex.qatools.allure</groupId> <artifactId>allure-maven-plugin</artifactId> 
+		<version>2.2</version> </plugin> </plugins> </reporting -->
 </project>
